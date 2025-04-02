@@ -10,7 +10,7 @@ export function ShowGrid({ shows }: ShowgridProps) {
 		<div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
 			{
 				shows.map((show: any) => (
-					<Link href={`/shows/${show.id}`}  key={show.id}>
+					<Link href={`/shows/${show.id}`} key={show.id}>
 						<div className="p-4 cursor-pointer">
 							<img
 								src={show.img}
