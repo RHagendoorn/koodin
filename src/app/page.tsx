@@ -1,5 +1,6 @@
 'use client'
 
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
@@ -48,7 +49,8 @@ export default function Home() {
       <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {shows.length > 0 ? (
           shows.map((show: any) => (
-              <div key={show.id} className="p-4">
+            <Link href={`/shows/${show.id}`}  key={show.id}>
+              <div className="p-4 cursor-pointer">
                 <img
                   src={show.img}
                   alt={show.name}
@@ -56,6 +58,7 @@ export default function Home() {
                 />
                 <h3 className="text-md font-semibold truncate">{show.name}</h3>
               </div>
+            </Link>
           ))
         ) : (
           <div>No results to show..</div>
