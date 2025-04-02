@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { mapper } from './mapper';
 
 export interface showData {
+	score: number
   show: {
     image: {
             medium?: string

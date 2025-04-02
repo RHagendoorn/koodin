@@ -1,12 +1,13 @@
 'use client'
 
-import Link from "next/link";
 import { useState } from "react";
+import { ShowList } from "./components/showlist";
+import { MappedShowData } from "./api/shows/mapper";
 
 export default function Home() {
 
   const [inputValue, setInputValue] = useState('');
-  const [shows, setShows] = useState([]);
+  const [genres, setGenres] = useState<Record<string, MappedShowData[]>>({});
 
   const handlePress = (e: React.KeyboardEvent) => {
     if (e.key !== 'Enter') {
@@ -23,7 +24,7 @@ export default function Home() {
       const data = await response.json();
 
       if (response.ok) {
-        setShows(data);
+        setGenres(data);
       } else {
         console.error('Failed to fetch shows');
       }
@@ -43,28 +44,19 @@ export default function Home() {
           onChange={e => setInputValue(e.target.value)}
           onKeyDown={handlePress}
         />
-        <button onClick={handleSearch}>Search</button>
+        <button className="font-semibold" onClick={handleSearch}>Search</button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {shows.length > 0 ? (
-          shows.map((show: any) => (
-            <Link href={`/shows/${show.id}`}  key={show.id}>
-              <div className="p-4 cursor-pointer">
-                <img
-                  src={show.img}
-                  alt={show.name}
-                  className="w-full h-auto object-cover rounded-md mb-2"
-                />
-                <h3 className="text-md font-semibold truncate">{show.name}</h3>
-              </div>
-            </Link>
-          ))
-        ) : (
-          <div>No results to show..</div>
-        )}
-      </div>
+			<div>
+				{ 
+					Object.keys(genres).length ? Object.entries(genres).map(([genre, shows]) => 
+						<div key={genre} className="bg-white shadow-lg rounded-lg m-4 p-4">
+							<h1 className="font-extrabold text-lg">{genre}</h1>
+							<ShowList shows={shows}></ShowList>
+						</div>
+					) : <div>No results to show..</div>
+				}
+			</div>
     </div>
-
   );
 }

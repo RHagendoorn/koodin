@@ -10,7 +10,7 @@ export interface MappedShowDetails {
 }
 
 export function mapper(data: showDetails): MappedShowDetails {
-  const { genres, image, name, id, url, summary, language } = data
+  const { genres, image, name, id, summary, language } = data
   return {
     genres,
     img: image.medium!,
